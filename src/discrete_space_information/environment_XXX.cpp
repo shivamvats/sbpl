@@ -148,7 +148,7 @@ EnvXXXHashEntry_t* EnvironmentXXX::CreateNewHashEntry(unsigned int X1, unsigned 
     HashEntry->X3 = X3;
     HashEntry->X4 = X4;
 
-    HashEntry->stateID = EnvXXX.StateID2CoordTable.size();
+    HashEntry->stateID = (int)EnvXXX.StateID2CoordTable.size();
 
     //insert into the tables
     EnvXXX.StateID2CoordTable.push_back(HashEntry);

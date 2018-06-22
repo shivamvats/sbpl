@@ -68,7 +68,8 @@ CMDPSTATE* VIPlanner::CreateState(int stateID)
     state = viPlanner.MDP.AddState(stateID);
 
     //remember the index of the state
-    environment_->StateID2IndexMapping[stateID][VIMDP_STATEID2IND] = viPlanner.MDP.StateArray.size() - 1;
+    environment_->StateID2IndexMapping[stateID][VIMDP_STATEID2IND] =
+            (int)(viPlanner.MDP.StateArray.size() - 1);
 
 #if DEBUG
     if (state != viPlanner.MDP.StateArray[environment_->StateID2IndexMapping[stateID][VIMDP_STATEID2IND]]) {

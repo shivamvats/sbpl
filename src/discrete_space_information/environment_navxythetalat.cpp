@@ -1032,7 +1032,7 @@ void EnvironmentNAVXYTHETALATTICE::PrecomputeActionswithBaseMotionPrimitive(
 
         //iterate over motion primitives
         for (size_t aind = 0; aind < motionprimitiveV->size(); aind++) {
-            EnvNAVXYTHETALATCfg.ActionsV[tind][aind].aind = aind;
+            EnvNAVXYTHETALATCfg.ActionsV[tind][aind].aind = (unsigned char)aind;
             EnvNAVXYTHETALATCfg.ActionsV[tind][aind].starttheta = tind;
             double mp_endx_m = motionprimitiveV->at(aind).intermptV[motionprimitiveV->at(aind).intermptV.size() - 1].x;
             double mp_endy_m = motionprimitiveV->at(aind).intermptV[motionprimitiveV->at(aind).intermptV.size() - 1].y;
@@ -1113,7 +1113,7 @@ void EnvironmentNAVXYTHETALATTICE::PrecomputeActionswithBaseMotionPrimitive(
     }
 
     //set number of actions
-    EnvNAVXYTHETALATCfg.actionwidth = motionprimitiveV->size();
+    EnvNAVXYTHETALATCfg.actionwidth = (int)motionprimitiveV->size();
 
     //now compute replanning data
     ComputeReplanningData();
@@ -2677,7 +2677,7 @@ EnvironmentNAVXYTHETALAT::CreateNewHashEntry_lookup(int X, int Y, int Theta)
     HashEntry->Theta = Theta;
     HashEntry->iteration = 0;
 
-    HashEntry->stateID = StateID2CoordTable.size();
+    HashEntry->stateID = (int)StateID2CoordTable.size();
 
     // insert into the tables
     StateID2CoordTable.push_back(HashEntry);
@@ -2726,7 +2726,7 @@ EnvironmentNAVXYTHETALAT::CreateNewHashEntry_hash(int X, int Y, int Theta)
     HashEntry->Theta = Theta;
     HashEntry->iteration = 0;
 
-    HashEntry->stateID = StateID2CoordTable.size();
+    HashEntry->stateID = (int)StateID2CoordTable.size();
 
     // insert into the tables
     StateID2CoordTable.push_back(HashEntry);

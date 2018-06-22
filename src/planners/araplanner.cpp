@@ -117,7 +117,7 @@ CMDPSTATE* ARAPlanner::CreateState(int stateID, ARASearchStateSpace_t* pSearchSt
 
     //remember the index of the state
     environment_->StateID2IndexMapping[stateID][ARAMDP_STATEID2IND] =
-            pSearchStateSpace->searchMDP.StateArray.size() - 1;
+            (int)(pSearchStateSpace->searchMDP.StateArray.size() - 1);
 
 #if DEBUG
     if(state !=
@@ -1010,7 +1010,7 @@ bool ARAPlanner::Search(ARASearchStateSpace_t* pSearchStateSpace, vector<int>& p
 #endif
 
     PathCost = ((ARAState*)pSearchStateSpace->searchgoalstate->PlannerSpecificData)->g;
-    MaxMemoryCounter += environment_->StateID2IndexMapping.size() * sizeof(int);
+    MaxMemoryCounter += (int)(environment_->StateID2IndexMapping.size() * sizeof(int));
 
     SBPL_PRINTF("MaxMemoryCounter = %d\n", MaxMemoryCounter);
 

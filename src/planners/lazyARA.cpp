@@ -68,7 +68,7 @@ LazyARAState* LazyARAPlanner::GetState(int id)
 {
     // if this stateID is out of bounds of our state vector then grow the list
     if (id >= int(states.size())) {
-        for (int i = states.size(); i <= id; i++) {
+        for (int i = (int)states.size(); i <= id; i++) {
             states.push_back(NULL);
         }
     }

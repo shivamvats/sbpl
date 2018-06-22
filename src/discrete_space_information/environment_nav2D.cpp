@@ -450,7 +450,7 @@ EnvNAV2DHashEntry_t* EnvironmentNAV2D::CreateNewHashEntry(int X, int Y)
     HashEntry->X = X;
     HashEntry->Y = Y;
 
-    HashEntry->stateID = EnvNAV2D.StateID2CoordTable.size();
+    HashEntry->stateID = (int)EnvNAV2D.StateID2CoordTable.size();
 
     //insert into the tables
     EnvNAV2D.StateID2CoordTable.push_back(HashEntry);

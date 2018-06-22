@@ -160,7 +160,7 @@ EnvROBARMHashEntry_t* EnvironmentROBARM::CreateNewHashEntry(short unsigned int* 
     HashEntry->endeffx = endeffx;
     HashEntry->endeffy = endeffy;
 
-    HashEntry->stateID = EnvROBARM.StateID2CoordTable.size();
+    HashEntry->stateID = (int)EnvROBARM.StateID2CoordTable.size();
 
     //insert into the tables
     EnvROBARM.StateID2CoordTable.push_back(HashEntry);
@@ -1126,7 +1126,7 @@ void EnvironmentROBARM::SetAllPreds(CMDPSTATE* state)
 
 int EnvironmentROBARM::SizeofCreatedEnv()
 {
-    return EnvROBARM.StateID2CoordTable.size();
+    return (int)EnvROBARM.StateID2CoordTable.size();
 }
 
 void EnvironmentROBARM::PrintState(int stateID, bool bVerbose, FILE* fOut /*=NULL*/)

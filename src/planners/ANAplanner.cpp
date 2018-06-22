@@ -81,7 +81,7 @@ CMDPSTATE* anaPlanner::CreateState(int stateID, anaSearchStateSpace_t* pSearchSt
 
     //remember the index of the state
     environment_->StateID2IndexMapping[stateID][anaMDP_STATEID2IND] =
-            pSearchStateSpace->searchMDP.StateArray.size() - 1;
+            (int)(pSearchStateSpace->searchMDP.StateArray.size() - 1);
 
 #if DEBUG
     if (state !=
@@ -980,7 +980,7 @@ bool anaPlanner::Search(anaSearchStateSpace_t* pSearchStateSpace, vector<int>& p
     printf("Suboptimality = %.4f\n", pSearchStateSpace->eps_satisfied);
 
     PathCost = ((anaState*)pSearchStateSpace->searchgoalstate->PlannerSpecificData)->g;
-    MaxMemoryCounter += environment_->StateID2IndexMapping.size() * sizeof(int);
+    MaxMemoryCounter += (int)(environment_->StateID2IndexMapping.size() * sizeof(int));
 
     printf("MaxMemoryCounter = %d\n", MaxMemoryCounter);
 

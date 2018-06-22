@@ -115,7 +115,7 @@ CMDPSTATE* ADPlanner::CreateState(int stateID, ADSearchStateSpace_t* pSearchStat
     state = pSearchStateSpace->searchMDP.AddState(stateID);
 
     //remember the index of the state
-    environment_->StateID2IndexMapping[stateID][ADMDP_STATEID2IND] = pSearchStateSpace->searchMDP.StateArray.size() - 1;
+    environment_->StateID2IndexMapping[stateID][ADMDP_STATEID2IND] = (int)pSearchStateSpace->searchMDP.StateArray.size() - 1;
 
 #if DEBUG
     if (state !=
@@ -1197,7 +1197,7 @@ bool ADPlanner::Search(ADSearchStateSpace_t* pSearchStateSpace, vector<int>& pat
 #endif
 
     PathCost = ((ADState*)pSearchStateSpace->searchgoalstate->PlannerSpecificData)->g;
-    MaxMemoryCounter += environment_->StateID2IndexMapping.size() * sizeof(int);
+    MaxMemoryCounter += (int)(environment_->StateID2IndexMapping.size() * sizeof(int));
 
     SBPL_PRINTF("MaxMemoryCounter = %d\n", MaxMemoryCounter);
 

@@ -440,7 +440,7 @@ MHASearchState* MHAPlanner::get_state(int state_id)
         init_state(s, mha_state_idx, state_id);
 
         // map graph state to search state
-        idxs[MHAMDP_STATEID2IND] = mha_state_idx;
+        idxs[MHAMDP_STATEID2IND] = (int)mha_state_idx;
         m_search_states.push_back(s);
 
         return s;
@@ -522,7 +522,7 @@ void MHAPlanner::clear_open_lists()
 
 int MHAPlanner::compute_key(MHASearchState* state, int hidx)
 {
-    return state->g + m_eps * state->od[hidx].h;
+    return state->g + (int)(m_eps * (double)state->od[hidx].h);
 }
 
 void MHAPlanner::expand(MHASearchState* state, int hidx)

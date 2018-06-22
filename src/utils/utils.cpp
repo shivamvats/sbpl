@@ -419,7 +419,7 @@ bool IsInsideFootprint(sbpl_2Dpt_t pt, vector<sbpl_2Dpt_t>* bounding_polygon)
     double xinters;
     sbpl_2Dpt_t p1;
     sbpl_2Dpt_t p2;
-    int N = bounding_polygon->size();
+    int N = (int)bounding_polygon->size();
 
     p1 = bounding_polygon->at(0);
     for (i = 1; i <= N; i++) {

@@ -120,7 +120,7 @@ CMDPSTATE* RSTARPlanner::CreateState(int stateID)
 
     //remember the index of the state
     environment_->StateID2IndexMapping[stateID][RSTARMDP_STATEID2IND] =
-            pSearchStateSpace->searchMDP.StateArray.size() - 1;
+            (int)(pSearchStateSpace->searchMDP.StateArray.size() - 1);
 
 #if DEBUG
     if(state !=
@@ -188,8 +188,8 @@ CMDPSTATE* RSTARPlanner::CreateLSearchState(int stateID)
     state = pLSearchStateSpace->MDP.AddState(stateID);
 
     //remember the index of the state
-    environment_->StateID2IndexMapping[stateID][RSTARMDP_LSEARCH_STATEID2IND]
-        = pLSearchStateSpace->MDP.StateArray.size() - 1;
+    environment_->StateID2IndexMapping[stateID][RSTARMDP_LSEARCH_STATEID2IND] =
+            (int)(pLSearchStateSpace->MDP.StateArray.size() - 1);
 
 #if DEBUG
     if(state !=
@@ -642,7 +642,7 @@ int RSTARPlanner::ImprovePath(double MaxNumofSecs)
             RSTARACTIONDATA* computedactiondata = (RSTARACTIONDATA*)computedaction->PlannerSpecificData;
 
             if (computedactiondata->exp < local_expand_thres) {
-                maxe = local_expand_thres;
+                maxe = (int)local_expand_thres;
             }
             else {
                 SBPL_PRINTF("Trying to compute hard-to-find path\n");
@@ -696,7 +696,7 @@ int RSTARPlanner::ImprovePath(double MaxNumofSecs)
                              ((RSTARACTIONDATA*)computedaction->PlannerSpecificData)->clow, rstarNewTargetState->g);
 
                 //add the successor to our graph
-                CMDPACTION* action = rstarpredstate->MDPstate->AddAction(rstarpredstate->MDPstate->Actions.size());
+                CMDPACTION* action = rstarpredstate->MDPstate->AddAction((int)rstarpredstate->MDPstate->Actions.size());
                 action->AddOutcome(rstarNewTargetState->MDPstate->StateID, computedaction->Costs[0], 1.0);
                 action->PlannerSpecificData = new RSTARACTIONDATA;
                 MaxMemoryCounter += sizeof(RSTARACTIONDATA);
@@ -1240,7 +1240,7 @@ bool RSTARPlanner::Search(vector<int>& pathIds, int & PathCost, bool bFirstSolut
     }
 
     //get the size of environment that is already allocated
-    int oldenvsize = environment_->StateID2IndexMapping.size() * sizeof(int);
+    int oldenvsize = (int)(environment_->StateID2IndexMapping.size() * sizeof(int));
 
     //the main loop of R*
     int prevexpands = 0;
@@ -1328,7 +1328,7 @@ bool RSTARPlanner::Search(vector<int>& pathIds, int & PathCost, bool bFirstSolut
     SBPL_FFLUSH(fDeb);
 #endif
 
-    MaxMemoryCounter += (oldenvsize - environment_->StateID2IndexMapping.size() * sizeof(int));
+    MaxMemoryCounter += (int)(oldenvsize - environment_->StateID2IndexMapping.size() * sizeof(int));
     SBPL_PRINTF("MaxMemoryCounter = %d\n", MaxMemoryCounter);
 
     bool ret = false;
