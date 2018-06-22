@@ -841,7 +841,7 @@ bool EnvironmentNAVXYTHETALATTICE::ReadMotionPrimitives(FILE* fMotPrims)
             SBPL_PRINTF("%s %f\n", angle_string.c_str(), angle);
             EnvNAVXYTHETALATCfg.ThetaDirs.push_back(angle);
         }
-        EnvNAVXYTHETALATCfg.ThetaDirs.push_back(2.0 * M_PI); // Add 2 PI at end for overlap
+        EnvNAVXYTHETALATCfg.ThetaDirs.push_back(2.0 * PI_CONST); // Add 2 PI at end for overlap
     }
 
     // read in the total number of actions
