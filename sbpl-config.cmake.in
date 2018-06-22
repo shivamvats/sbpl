@@ -21,10 +21,11 @@
 # and OpenCVConfig.cmake.in from OpenCV
 # ===================================================================================
 
- 
 set(SBPL_INCLUDE_DIRS "@SBPL_INCLUDE_DIR@")
 set(SBPL_LIBRARY_DIRS "@SBPL_LIB_DIR@")
  
+get_filename_component(SBPL_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(${SBPL_CMAKE_DIR}/sbpl-targets.cmake)
 
 # Set library names as absolute paths:
-set(SBPL_LIBRARIES "@SBPL_LIB_DIR@/libsbpl@CMAKE_SHARED_LIBRARY_SUFFIX@")
+set(SBPL_LIBRARIES sbpl)
