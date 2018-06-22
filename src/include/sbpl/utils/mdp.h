@@ -44,7 +44,7 @@ class CMDPSTATE;
 class CMDPACTION
 {
 public:
-    //data
+    // data
     int ActionID;
     int SourceStateID;
     std::vector<int> SuccsID;
@@ -52,7 +52,7 @@ public:
     std::vector<float> SuccsProb;
     void* PlannerSpecificData;
 
-    //constructors
+    // constructors
     CMDPACTION(int ID, int sourcestateid)
     {
         ActionID = ID;
@@ -69,7 +69,7 @@ public:
         }
     }
 
-    //functions
+    // functions
     bool Delete();
     bool IsValid();
     void AddOutcome(int OutcomeStateID, int OutcomeCost, float OutcomeProb);
@@ -84,13 +84,13 @@ public:
 class CMDPSTATE
 {
 public:
-    //data
+    // data
     int StateID;
     std::vector<CMDPACTION*> Actions;
     std::vector<int> PredsID;
     void* PlannerSpecificData;
 
-    //constructors
+    // constructors
     CMDPSTATE(int ID)
     {
         StateID = ID;
@@ -106,7 +106,7 @@ public:
         }
     }
 
-    //functions
+    // functions
     bool Delete();
     CMDPACTION* AddAction(int ID);
     bool ContainsPred(int stateID);
@@ -122,17 +122,17 @@ public:
 class CMDP
 {
 public:
-    //data
+    // data
     std::vector<CMDPSTATE*> StateArray;
 
     //constructors
     CMDP() { }
     ~CMDP() { }
 
-    //functions
+    // functions
     bool empty();
     bool full();
-    //creates numofstates states. Their ids are their orderings for Original, Thresholded & Search MDPs
+    // creates numofstates states. Their ids are their orderings for Original, Thresholded & Search MDPs
     bool Create(int numofstates);
     bool Delete();
     void Print(FILE* fOut);

@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2008, Maxim Likhachev
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  *       notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above copyright
@@ -13,7 +13,7 @@
  *     * Neither the name of the Carnegie Mellon University nor the names of its
  *       contributors may be used to endorse or promote products derived from
  *       this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -45,7 +45,7 @@ class MDPConfig;
 //configuration parameters
 typedef struct ENV_NAV2D_CONFIG
 {
-    ENV_NAV2D_CONFIG() 
+    ENV_NAV2D_CONFIG()
     {
         Grid2D = NULL;
     }
@@ -63,7 +63,7 @@ typedef struct ENV_NAV2D_CONFIG
 
     int dx_[ENVNAV2D_MAXDIRS];
     int dy_[ENVNAV2D_MAXDIRS];
-    //the intermediate cells through which the actions go 
+    //the intermediate cells through which the actions go
     int dxintersects_[ENVNAV2D_MAXDIRS][2];
     int dyintersects_[ENVNAV2D_MAXDIRS][2];
     //distances of transitions
@@ -82,7 +82,7 @@ typedef struct ENVHASHENTRY
 //variables that dynamically change (e.g., array of states, ...)
 typedef struct ENVNAV2D
 {
-    ENVNAV2D() 
+    ENVNAV2D()
     {
         Coord2StateIDHashTable = NULL;
     }
@@ -220,7 +220,7 @@ public:
 
     /**
      * \brief a short version of environment initialization. Here start and goal coordinates will be set to 0s
-     * 
+     *
      * if mapdata is NULL the grid is initialized to all freespace
      */
     virtual bool InitializeEnv(int width, int height, const unsigned char* mapdata, unsigned char obsthresh);
@@ -289,7 +289,7 @@ public:
     virtual void GetRandomNeighs(int stateID, std::vector<int>* NeighIDV, std::vector<int>* CLowV, int nNumofNeighs,
                                  int nDist_c, bool bSuccs);
 
-    /** 
+    /**
      * \brief a direct way to set the configuration of environment - see
      *        InitializeEnv function for details about the parameters
      *        it is not a full way to initialize environment. To fully initialize, one
@@ -324,7 +324,7 @@ public:
      */
     virtual bool IsObstacle(int x, int y);
 
-    /** 
+    /**
      * \brief returns the cost associated with <x,y> cell, i.e., A[x][y]
      */
     virtual unsigned char GetMapCost(int x, int y);
