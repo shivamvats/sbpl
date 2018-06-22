@@ -13,6 +13,11 @@ endif()
 
 include_directories(src/include)
 
+if(MSVC)
+    add_definitions(-DNOMINMAX)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif()
+
 add_library(sbpl SHARED
   src/discrete_space_information/environment_nav2D.cpp
   src/discrete_space_information/environment_navxythetalat.cpp
