@@ -30,6 +30,7 @@
 #include <cmath>
 #include <cstring>
 #include <ctime>
+#include <algorithm>
 #include <sbpl/discrete_space_information/environment_navxythetalat.h>
 #include <sbpl/utils/2Dgridsearch.h>
 #include <sbpl/utils/key.h>

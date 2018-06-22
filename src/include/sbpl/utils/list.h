@@ -31,6 +31,7 @@
 #define __LIST_H_
 
 #include <cstdlib>
+#include <algorithm>
 #include <sstream>
 
 #include <sbpl/config.h>
