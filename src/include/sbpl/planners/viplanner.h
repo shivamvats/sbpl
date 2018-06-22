@@ -38,7 +38,7 @@
 #define MDP_ERRDELTA 0.01
 
 class DiscreteSpaceInformation;
-class MDPConfig;
+struct MDPConfig;
 
 struct VIPLANNER_T
 {

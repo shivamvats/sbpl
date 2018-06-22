@@ -40,10 +40,10 @@
 //the maximum size of the heap
 #define MAXSTATESPACESIZE 20000000
 
-class CMDPSTATE;
-class CMDPACTION
+struct CMDPSTATE;
+
+struct CMDPACTION
 {
-public:
     // data
     int ActionID;
     int SourceStateID;
@@ -67,14 +67,10 @@ public:
     int GetIndofMostLikelyOutcome();
     int GetIndofOutcome(int OutcomeID);
     bool DeleteAllOutcomes();
-
-    //operators
-    void operator =(const CMDPACTION& rhsaction);
 };
 
-class CMDPSTATE
+struct CMDPSTATE
 {
-public:
     // data
     int StateID;
     std::vector<CMDPACTION*> Actions;
@@ -96,20 +92,12 @@ public:
     bool RemovePred(int stateID);
     bool RemoveAllActions();
     CMDPACTION* GetAction(int actionID);
-
-    //operators
-    void operator =(const CMDPSTATE& rhsstate);
 };
 
-class CMDP
+struct CMDP
 {
-public:
     // data
     std::vector<CMDPSTATE*> StateArray;
-
-    //constructors
-    CMDP() { }
-    ~CMDP() { }
 
     // functions
     bool empty();

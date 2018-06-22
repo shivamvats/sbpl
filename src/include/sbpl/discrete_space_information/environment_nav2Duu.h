@@ -42,9 +42,9 @@
 #define NAV2DUU_MAXACTIONSWIDTH 9
 #define ENVNAV2DUU_MAXDIRS 8
 
-class CMDPACTION;
-class CMDPSTATE;
-class MDPConfig;
+struct CMDPACTION;
+struct CMDPSTATE;
+struct MDPConfig;
 
 typedef struct ENV_NAV2DUU_CONFIG
 {

@@ -56,8 +56,8 @@
 #define NAVXYTHETALAT_DEFAULT_ACTIONWIDTH 5
 #define NAVXYTHETALAT_COSTMULT_MTOMM 1000
 
-class CMDPSTATE;
-class MDPConfig;
+struct CMDPSTATE;
+struct MDPConfig;
 class SBPL2DGridSearch;
 
 struct EnvNAVXYTHETALATAction_t

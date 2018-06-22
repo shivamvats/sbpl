@@ -35,7 +35,7 @@
 #include <sbpl/config.h>
 #include <sbpl/sbpl_exception.h>
 
-class CMDPSTATE;
+struct CMDPSTATE;
 struct MDPConfig;
 
 /**

@@ -50,7 +50,7 @@
 class CHeap;
 class CList;
 class DiscreteSpaceInformation;
-class MDPConfig;
+struct MDPConfig;
 class StateChangeQuery;
 
 //-------------------------------------------------------------

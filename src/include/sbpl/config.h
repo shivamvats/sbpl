@@ -96,12 +96,12 @@ int SBPL_FFLUSHALL(FILE* file);
 #define SBPL_ERROR(...)             SBPL_PRINTALL(SBPL_LEVEL_ERROR, __VA_ARGS__)
 #define SBPL_FATAL(...)             SBPL_PRINTALL(SBPL_LEVEL_FATAL, __VA_ARGS__)
   #else
-#define SBPL_DEBUG(...)
-#define SBPL_DEBUG_NAMED(file, ...)
-#define SBPL_INFO(...)
-#define SBPL_WARN(...)
-#define SBPL_ERROR(...)
-#define SBPL_FATAL(...)
+#define SBPL_DEBUG(...)             do { } while (0)
+#define SBPL_DEBUG_NAMED(file, ...) do { } while (0)
+#define SBPL_INFO(...)              do { } while (0)
+#define SBPL_WARN(...)              do { } while (0)
+#define SBPL_ERROR(...)             do { } while (0)
+#define SBPL_FATAL(...)             do { } while (0)
   #endif
 #endif
 
@@ -110,10 +110,10 @@ int SBPL_FFLUSHALL(FILE* file);
 #define SBPL_DEBUG_NAMED(a,...)     ROS_DEBUG_NAMED("SBPL_" #a,__VA_ARGS__)
 
 #define SBPL_FOPEN(...)             (FILE*)1
-#define SBPL_FCLOSE(...)
+#define SBPL_FCLOSE(...)            do { } while (0)
 #define SBPL_PRINTF                 ROS_DEBUG
 #define SBPL_FPRINTF(a,...)         ROS_DEBUG_NAMED("SBPL_" #a,__VA_ARGS__)
-#define SBPL_FFLUSH(...)
+#define SBPL_FFLUSH(...)            do { } while (0)
 #else
   #if DEBUG
 #define SBPL_FOPEN                  fopen
@@ -123,10 +123,10 @@ int SBPL_FFLUSHALL(FILE* file);
 #define SBPL_FFLUSH(file)           SBPL_FFLUSHALL(file)
   #else
 #define SBPL_FOPEN(file, ...)       (FILE*)1
-#define SBPL_FCLOSE(...)
-#define SBPL_PRINTF(...)
-#define SBPL_FPRINTF(file, ...)
-#define SBPL_FFLUSH(file)
+#define SBPL_FCLOSE(...)            do { } while (0)
+#define SBPL_PRINTF(...)            do { } while (0)
+#define SBPL_FPRINTF(file, ...)     do { } while (0)
+#define SBPL_FFLUSH(file)           do { } while (0)
   #endif
 #endif
 

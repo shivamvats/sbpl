@@ -55,7 +55,7 @@
 
 #define UNKNOWN_COST 1000000
 
-class CMDP;
+struct CMDP;
 class PlannerStats;
 
 typedef struct

@@ -36,9 +36,9 @@
 
 #define XXX_MAXACTIONSWIDTH 9
 
-class CMDPACTION;
-class CMDPSTATE;
-class MDPConfig;
+struct CMDPACTION;
+struct CMDPSTATE;
+struct MDPConfig;
 
 typedef struct ENV_XXX_CONFIG
 {

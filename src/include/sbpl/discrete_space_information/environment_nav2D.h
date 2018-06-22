@@ -39,8 +39,8 @@
 #define ENVNAV2D_DEFAULTOBSTHRESH 1 //253-for willow garage	//see explanation of the value below
 #define ENVNAV2D_MAXDIRS 16 //TODO-debugmax - crashes for 8 in debug mode
 
-class CMDPSTATE;
-class MDPConfig;
+struct CMDPSTATE;
+struct MDPConfig;
 
 //configuration parameters
 typedef struct ENV_NAV2D_CONFIG

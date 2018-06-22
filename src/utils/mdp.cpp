@@ -78,11 +78,6 @@ void CMDPACTION::AddOutcome(int OutcomeStateID, int OutcomeCost, float OutcomePr
 
 }
 
-void CMDPACTION::operator =(const CMDPACTION& rhsaction)
-{
-    this->ActionID = rhsaction.ActionID;
-}
-
 int CMDPACTION::GetIndofMostLikelyOutcome()
 {
     double HighestProb = 0;
@@ -209,11 +204,6 @@ bool CMDPSTATE::ContainsPred(int stateID)
         if (PredsID[i] == stateID) return true;
     }
     return false;
-}
-
-void CMDPSTATE::operator =(const CMDPSTATE& rhsstate)
-{
-    this->StateID = rhsstate.StateID;
 }
 
 CMDPACTION* CMDPSTATE::GetAction(int actionID)
