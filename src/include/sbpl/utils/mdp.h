@@ -60,15 +60,6 @@ public:
         PlannerSpecificData = NULL;
     }
 
-    ~CMDPACTION()
-    {
-        if (PlannerSpecificData != NULL) {
-            const char* msg = "ERROR: state deletion: planner specific data is not deleted";
-            SBPL_FPRINTF(stderr, "%s\n", msg);
-            throw SBPL_Exception(msg);
-        }
-    }
-
     // functions
     bool Delete();
     bool IsValid();
@@ -95,15 +86,6 @@ public:
     {
         StateID = ID;
         PlannerSpecificData = NULL;
-    }
-
-    ~CMDPSTATE()
-    {
-        if (PlannerSpecificData != NULL) {
-            const char* msg = "ERROR: state deletion: planner specific data is not deleted";
-            SBPL_FPRINTF(stderr, "%s\n", msg);
-            throw SBPL_Exception(msg);
-        }
     }
 
     // functions
