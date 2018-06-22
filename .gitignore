@@ -9,6 +9,8 @@ bin/*
 lib/*
 CMakeFiles/*
 build/*
+release/*
 
 .project
 .cproject
+
