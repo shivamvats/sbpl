@@ -104,6 +104,15 @@ public:
      */
     virtual void GetSuccs(int SourceStateID, std::vector<int>* SuccIDV, std::vector<int>* CostV) = 0;
 
+    /** \brief This version of GetSuccs is to be used with a
+     * multi-representation planner. The environment is assumed to have a list
+     * of different action spaces and GetSuccs calls the appropriate action
+     * space only.
+     */
+    virtual void GetSuccs(int SourceStateID, int repID, std::vector<int>* SuccIDV, std::vector<int>* CostV){
+        throw SBPL_Exception("ERROR: GetSuccs (representation specific) is not implemented for this environment.");
+    }
+
     /**
      * \brief This version is used with lazy planners. The environment must tell which successors have
      *        been evaluated fully (and therefore their true cost is being returned) or if it has not been.
