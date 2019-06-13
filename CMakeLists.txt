@@ -31,6 +31,7 @@ set(SBPL_SOURCE_FILES
     src/planners/araplanner.cpp
     src/planners/lazyARA.cpp
     src/planners/mhaplanner.cpp
+    src/planners/mrmhaplanner.cpp
     src/planners/ppcpplanner.cpp
     src/planners/rstarplanner.cpp
     src/planners/viplanner.cpp
