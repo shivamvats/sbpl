@@ -18,49 +18,11 @@ MRMHAPlanner::MRMHAPlanner(
     Heuristic** heurs,
     int hcount)
 :
-    MHAPlanner( environment, hanchor, heurs, hcount ),
-    m_hanchor(hanchor),
-    m_heurs(heurs),
-    m_hcount(hcount),
-    m_params(0.0),
-    m_initial_eps_mha(1.0),
-    m_max_expansions(0),
-    m_eps(1.0),
-    m_eps_mha(1.0),
-    m_eps_satisfied((double)INFINITECOST),
-    m_num_expansions(0),
-    m_elapsed(0.0),
-    m_call_number(0), // uninitialized
-    m_start_state(NULL),
-    m_goal_state(NULL),
-    m_search_states(),
-    m_open(NULL)
-{
-    environment_ = environment;
-
-    m_open = new CHeap[hcount + 1];
-
-    // Overwrite default members for ReplanParams to represent a single optimal
-    // search
-    m_params.initial_eps = 1.0;
-    m_params.final_eps = 1.0;
-    m_params.dec_eps = 0.2; // NOTE: same initial epsilon delta as ARA*
-    m_params.return_first_solution = false;
-    m_params.max_time = 0.0;
-    m_params.repair_time = 0.0;
-
-    /// Four Modes:
-    ///     Search Until Solution Bounded
-    ///     Search Until Solution Unbounded
-    ///     Improve Solution Bounded
-    ///     Improve Solution Unbounded
-}
+    MHAPlanner( environment, hanchor, heurs, hcount )
+{ }
 
 MRMHAPlanner::~MRMHAPlanner()
 {
-    clear();
-
-    delete[] m_open;
 }
 
 int MRMHAPlanner::replan(
@@ -180,7 +142,7 @@ int MRMHAPlanner::replan(
 
     return 0;
 }
-
+/*
 bool MRMHAPlanner::check_params(const ReplanParams& params)
 {
     if (params.initial_eps < 1.0) {
@@ -458,3 +420,4 @@ bool MRMHAPlanner::closed_in_any_search(MHASearchState* state) const
 {
     return state->closed_in_anc || state->closed_in_add;
 }
+*/

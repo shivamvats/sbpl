@@ -53,6 +53,7 @@ public:
             int* solcost);
 
 private:
+    /*
     // Related objects
     Heuristic* m_hanchor;
     Heuristic** m_heurs;
@@ -103,6 +104,7 @@ private:
     bool closed_in_anc_search(MHASearchState* state) const;
     bool closed_in_add_search(MHASearchState* state) const;
     bool closed_in_any_search(MHASearchState* state) const;
+    */
 };
 
 #endif

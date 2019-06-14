@@ -157,7 +157,8 @@ public:
 
     ///@}
 
-private:
+//private:
+    public:
 
     // Related objects
     Heuristic* m_hanchor;
