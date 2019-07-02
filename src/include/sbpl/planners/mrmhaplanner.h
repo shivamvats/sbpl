@@ -51,6 +51,7 @@ public:
             std::vector<int>* solution_stateIDs_V,
             ReplanParams params,
             int* solcost);
+    void expand(MHASearchState* state, int hidx);
 
 private:
     /*

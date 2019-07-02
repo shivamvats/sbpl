@@ -83,6 +83,7 @@ int MRMHAPlanner::replan(
 
     while (!m_open[0].emptyheap() && !time_limit_reached()) {
         start_time = GetTime();
+        SBPL_DEBUG("Num heurs: %d", num_heuristics());
 
         // special case for mha* without additional heuristics
         if (num_heuristics() == 1) {
@@ -141,6 +142,68 @@ int MRMHAPlanner::replan(
     }
 
     return 0;
+}
+
+void MRMHAPlanner::expand(MHASearchState* state, int hidx)
+{
+    SBPL_DEBUG("Expanding state %d in search %d", state->state_id, hidx);
+
+    assert(!closed_in_add_search(state) || !closed_in_anc_search(state));
+
+    if (hidx == 0) {
+        state->closed_in_anc = true;
+    }
+    else {
+        state->closed_in_add = true;
+    }
+    ++m_num_expansions;
+
+    // remove s from all open lists
+    for (int temp_hidx = 0; temp_hidx < num_heuristics(); ++temp_hidx) {
+        if (m_open[temp_hidx].inheap(&state->od[temp_hidx].open_state)) {
+            m_open[temp_hidx].deleteheap(&state->od[temp_hidx].open_state);
+        }
+    }
+
+    std::vector<int> succ_ids;
+    std::vector<int> costs;
+    // Call the right ActionSpace.
+    environment_->GetSuccs(state->state_id, hidx, &succ_ids, &costs);
+    assert(succ_ids.size() == costs.size());
+
+    for (size_t sidx = 0; sidx < succ_ids.size(); ++sidx)  {
+        const int cost = costs[sidx];
+        MHASearchState* succ_state = get_state(succ_ids[sidx]);
+        reinit_state(succ_state);
+
+        SBPL_DEBUG(" Successor %d", succ_state->state_id);
+
+        int new_g = state->g + costs[sidx];
+        if (new_g < succ_state->g) {
+            succ_state->g = new_g;
+            succ_state->bp = state;
+            if (!closed_in_anc_search(succ_state)) {
+                const int fanchor = compute_key(succ_state, 0);
+                insert_or_update(succ_state, 0, fanchor);
+                SBPL_DEBUG("  Update in search %d with f = %d", 0, fanchor);
+
+                if (!closed_in_add_search(succ_state)) {
+                    for (int temp_hidx = 1; temp_hidx < num_heuristics(); ++temp_hidx) {
+                        int fn = compute_key(succ_state, temp_hidx);
+                        if (fn <= m_eps_mha * fanchor) {
+                            insert_or_update(succ_state, temp_hidx, fn);
+                            SBPL_DEBUG("  Update in search %d with f = %d", temp_hidx, fn);
+                        }
+                        else {
+                            SBPL_DEBUG("  Skipping update of in search %d (%0.3f > %0.3f)", temp_hidx, (double)fn, m_eps_mha * fanchor);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    assert(closed_in_any_search(state));
 }
 /*
 bool MRMHAPlanner::check_params(const ReplanParams& params)
@@ -292,67 +355,6 @@ int MRMHAPlanner::compute_key(MHASearchState* state, int hidx)
     return state->g + (int)(m_eps * (double)state->od[hidx].h);
 }
 
-void MRMHAPlanner::expand(MHASearchState* state, int hidx)
-{
-    SBPL_DEBUG("Expanding state %d in search %d", state->state_id, hidx);
-
-    assert(!closed_in_add_search(state) || !closed_in_anc_search(state));
-
-    if (hidx == 0) {
-        state->closed_in_anc = true;
-    }
-    else {
-        state->closed_in_add = true;
-    }
-    ++m_num_expansions;
-
-    // remove s from all open lists
-    for (int temp_hidx = 0; temp_hidx < num_heuristics(); ++temp_hidx) {
-        if (m_open[temp_hidx].inheap(&state->od[temp_hidx].open_state)) {
-            m_open[temp_hidx].deleteheap(&state->od[temp_hidx].open_state);
-        }
-    }
-
-    std::vector<int> succ_ids;
-    std::vector<int> costs;
-    // Call the right ActionSpace.
-    environment_->GetSuccs(state->state_id, hidx, &succ_ids, &costs);
-    assert(succ_ids.size() == costs.size());
-
-    for (size_t sidx = 0; sidx < succ_ids.size(); ++sidx)  {
-        const int cost = costs[sidx];
-        MHASearchState* succ_state = get_state(succ_ids[sidx]);
-        reinit_state(succ_state);
-
-        SBPL_DEBUG(" Successor %d", succ_state->state_id);
-
-        int new_g = state->g + costs[sidx];
-        if (new_g < succ_state->g) {
-            succ_state->g = new_g;
-            succ_state->bp = state;
-            if (!closed_in_anc_search(succ_state)) {
-                const int fanchor = compute_key(succ_state, 0);
-                insert_or_update(succ_state, 0, fanchor);
-                SBPL_DEBUG("  Update in search %d with f = %d", 0, fanchor);
-
-                if (!closed_in_add_search(succ_state)) {
-                    for (int temp_hidx = 1; temp_hidx < num_heuristics(); ++temp_hidx) {
-                        int fn = compute_key(succ_state, temp_hidx);
-                        if (fn <= m_eps_mha * fanchor) {
-                            insert_or_update(succ_state, temp_hidx, fn);
-                            SBPL_DEBUG("  Update in search %d with f = %d", temp_hidx, fn);
-                        }
-                        else {
-                            SBPL_DEBUG("  Skipping update of in search %d (%0.3f > %0.3f)", temp_hidx, (double)fn, m_eps_mha * fanchor);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    assert(closed_in_any_search(state));
-}
 
 MHASearchState* MRMHAPlanner::state_from_open_state(
     AbstractSearchState* open_state)
