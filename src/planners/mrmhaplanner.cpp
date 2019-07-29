@@ -26,6 +26,22 @@ MRMHAPlanner::~MRMHAPlanner()
 }
 
 int MRMHAPlanner::replan(
+        double allocated_time_sec,
+        std::vector<int>* solution_stateIDs_V){
+    int solcost;
+    return replan(allocated_time_sec, solution_stateIDs_V, &solcost);
+}
+
+int MRMHAPlanner::replan(
+        double allocated_time_sec,
+        std::vector<int>* solution_stateIDs_V,
+        int* solcost){
+    ReplanParams params = m_params;
+    params.max_time = allocated_time_sec;
+    return replan(solution_stateIDs_V, params, solcost);
+}
+
+int MRMHAPlanner::replan(
     std::vector<int>* solution_stateIDs_V,
     ReplanParams params,
     int* solcost)

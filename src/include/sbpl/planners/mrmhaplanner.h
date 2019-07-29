@@ -47,10 +47,17 @@ public:
     virtual ~MRMHAPlanner();
 
     /// \sa SBPLPlanner::replan(std::vector<int>*, ReplanParams, int*)
+    int replan(
+            double allocated_time_sec,
+            std::vector<int>* solution_stateIDs_V) override;
+    int replan(
+            double allocated_time_sec,
+            std::vector<int>* solution_stateIDs_V,
+            int* solcost) override;
     virtual int replan(
             std::vector<int>* solution_stateIDs_V,
             ReplanParams params,
-            int* solcost);
+            int* solcost) override;
     void expand(MHASearchState* state, int hidx);
 
 private:
