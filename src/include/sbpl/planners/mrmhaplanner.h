@@ -47,10 +47,10 @@ public:
     virtual ~MRMHAPlanner();
 
     /// \sa SBPLPlanner::replan(std::vector<int>*, ReplanParams, int*)
-    int replan(
+    virtual int replan(
             double allocated_time_sec,
             std::vector<int>* solution_stateIDs_V) override;
-    int replan(
+    virtual int replan(
             double allocated_time_sec,
             std::vector<int>* solution_stateIDs_V,
             int* solcost) override;
