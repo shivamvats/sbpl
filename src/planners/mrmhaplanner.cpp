@@ -18,8 +18,7 @@ MRMHAPlanner::MRMHAPlanner(
     Heuristic** heurs,
     int hcount)
 :
-    MHAPlanner( environment, hanchor, heurs, hcount )
-{ }
+    MHAPlanner( environment, hanchor, heurs, hcount ){}
 
 MRMHAPlanner::~MRMHAPlanner()
 {
@@ -99,8 +98,6 @@ int MRMHAPlanner::replan(
 
     while (!m_open[0].emptyheap() && !time_limit_reached()) {
         start_time = GetTime();
-        SBPL_DEBUG("Num heurs: %d", num_heuristics());
-
         // special case for mha* without additional heuristics
         if (num_heuristics() == 1) {
             if (m_goal_state->g <= get_minf(m_open[0])) {
@@ -122,6 +119,11 @@ int MRMHAPlanner::replan(
             if (!m_open[hidx].emptyheap() && get_minf(m_open[hidx]) <=
                 m_eps_mha * get_minf(m_open[0]))
             {
+                auto state = state_from_open_state(m_open[hidx].getminheap());
+                if(hidx == 1 && state->od[hidx].h > 1000*25)
+                    continue;
+                //if(hidx == 2 && state->od[hidx].h < 1000*10)
+                    //continue;
                 if (m_goal_state->g <= get_minf(m_open[hidx])) {
                     m_eps_satisfied = m_eps * m_eps_mha;
                     extract_path(solution_stateIDs_V, solcost);

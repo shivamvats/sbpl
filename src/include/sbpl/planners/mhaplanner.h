@@ -199,7 +199,6 @@ public:
     void clear_open_lists();
     void clear();
     int compute_key(MHASearchState* state, int hidx);
-    void expand(MHASearchState* state, int hidx);
     MHASearchState* state_from_open_state(AbstractSearchState* open_state);
     int compute_heuristic(int state_id, int hidx);
     int get_minf(CHeap& pq) const;
@@ -210,6 +209,9 @@ public:
     bool closed_in_anc_search(MHASearchState* state) const;
     bool closed_in_add_search(MHASearchState* state) const;
     bool closed_in_any_search(MHASearchState* state) const;
+
+    private:
+    void expand(MHASearchState* state, int hidx);
 };
 
 #endif
