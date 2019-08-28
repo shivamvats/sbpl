@@ -522,7 +522,12 @@ void MHAPlanner::clear_open_lists()
 
 int MHAPlanner::compute_key(MHASearchState* state, int hidx)
 {
-    return state->g + (int)(m_eps * (double)state->od[hidx].h);
+    //if(hidx == 0){
+    //    return state->g + (int)(1*(double)state->od[hidx].h);
+    //}
+    //else{
+      return state->g + (int)(m_eps * (double)state->od[hidx].h);
+    //}
 }
 
 void MHAPlanner::expand(MHASearchState* state, int hidx)
