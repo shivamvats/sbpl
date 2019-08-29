@@ -61,58 +61,6 @@ public:
     void expand(MHASearchState* state, int hidx);
 
 private:
-    /*
-    // Related objects
-    Heuristic* m_hanchor;
-    Heuristic** m_heurs;
-    int m_hcount;           ///< number of additional heuristics used
-
-    ReplanParams m_params;
-    double m_initial_eps_mha;
-    int m_max_expansions;
-
-    double m_eps;           ///< current w_1
-    double m_eps_mha;       ///< current w_2
-
-    /// suboptimality bound satisfied by the last search
-    double m_eps_satisfied; 
-
-    int m_num_expansions;   ///< current number of expansion
-    double m_elapsed;       ///< current amount of seconds
-
-    int m_call_number;
-
-    MHASearchState* m_start_state;
-    MHASearchState* m_goal_state;
-
-    std::vector<MHASearchState*> m_search_states;
-
-    CHeap* m_open; ///< sequence of (m_hcount + 1) open lists
-
-    bool check_params(const ReplanParams& params);
-
-    bool time_limit_reached() const;
-
-    int num_heuristics() const { return m_hcount + 1; }
-    MHASearchState* get_state(int state_id);
-    void init_state(MHASearchState* state, size_t mha_state_idx, int state_id);
-    void reinit_state(MHASearchState* state);
-    void reinit_search();
-    void clear_open_lists();
-    void clear();
-    int compute_key(MHASearchState* state, int hidx);
-    void expand(MHASearchState* state, int hidx);
-    MHASearchState* state_from_open_state(AbstractSearchState* open_state);
-    int compute_heuristic(int state_id, int hidx);
-    int get_minf(CHeap& pq) const;
-    void insert_or_update(MHASearchState* state, int hidx, int f);
-
-    void extract_path(std::vector<int>* solution_path, int* solcost);
-
-    bool closed_in_anc_search(MHASearchState* state) const;
-    bool closed_in_add_search(MHASearchState* state) const;
-    bool closed_in_any_search(MHASearchState* state) const;
-    */
 };
 
 #endif
