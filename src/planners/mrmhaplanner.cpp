@@ -16,9 +16,11 @@ MRMHAPlanner::MRMHAPlanner(
     DiscreteSpaceInformation* environment,
     Heuristic* hanchor,
     Heuristic** heurs,
-    int hcount)
+    int hcount,
+    SchedulingPolicy* policy)
 :
-    MHAPlanner( environment, hanchor, heurs, hcount ){}
+    MHAPlanner( environment, hanchor, heurs, hcount ),
+    m_schedule_policy{policy} {}
 
 MRMHAPlanner::~MRMHAPlanner()
 {
@@ -111,41 +113,41 @@ int MRMHAPlanner::replan(
             }
         }
 
-        for (int hidx = 1; hidx < num_heuristics(); ++hidx) {
-            if (m_open[0].emptyheap()) {
-                break;
-            }
+        //for (int hidx = 1; hidx < num_heuristics(); ++hidx) {
+        int hidx = m_schedule_policy->getNextQueue();
+        if (m_open[0].emptyheap()) {
+            break;
+        }
 
-            if (!m_open[hidx].emptyheap() && get_minf(m_open[hidx]) <=
-                m_eps_mha * get_minf(m_open[0]))
-            {
-                auto state = state_from_open_state(m_open[hidx].getminheap());
-                if(hidx == 1 && state->od[hidx].h > 1000*25)
-                    continue;
-                //if(hidx == 2 && state->od[hidx].h < 1000*10)
-                    //continue;
-                if (m_goal_state->g <= get_minf(m_open[hidx])) {
-                    m_eps_satisfied = m_eps * m_eps_mha;
-                    extract_path(solution_stateIDs_V, solcost);
-                    return 1;
-                }
-                else {
-                    MHASearchState* s =
-                            state_from_open_state(m_open[hidx].getminheap());
-                    expand(s, hidx);
-                }
+        if (!m_open[hidx].emptyheap() && get_minf(m_open[hidx]) <=
+            m_eps_mha * get_minf(m_open[0]))
+        {
+            auto state = state_from_open_state(m_open[hidx].getminheap());
+            if(hidx == 1 && state->od[hidx].h > 1000*25)
+                continue;
+            //if(hidx == 2 && state->od[hidx].h < 1000*10)
+                //continue;
+            if (m_goal_state->g <= get_minf(m_open[hidx])) {
+                m_eps_satisfied = m_eps * m_eps_mha;
+                extract_path(solution_stateIDs_V, solcost);
+                return 1;
             }
             else {
-                if (m_goal_state->g <= get_minf(m_open[0])) {
-                    m_eps_satisfied = m_eps * m_eps_mha;
-                    extract_path(solution_stateIDs_V, solcost);
-                    return 1;
-                }
-                else {
-                    MHASearchState* s =
-                            state_from_open_state(m_open[0].getminheap());
-                    expand(s, 0);
-                }
+                MHASearchState* s =
+                        state_from_open_state(m_open[hidx].getminheap());
+                expand(s, hidx);
+            }
+        }
+        else {
+            if (m_goal_state->g <= get_minf(m_open[0])) {
+                m_eps_satisfied = m_eps * m_eps_mha;
+                extract_path(solution_stateIDs_V, solcost);
+                return 1;
+            }
+            else {
+                MHASearchState* s =
+                        state_from_open_state(m_open[0].getminheap());
+                expand(s, 0);
             }
         }
         end_time = GetTime();

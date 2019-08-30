@@ -4,6 +4,7 @@
 #include <sbpl/heuristics/heuristic.h>
 #include <sbpl/planners/mhaplanner.h>
 #include <sbpl/utils/heap.h>
+#include "types.h"
 
 class MRMHAPlanner : public MHAPlanner
 {
@@ -13,7 +14,8 @@ public:
             DiscreteSpaceInformation* environment,
             Heuristic* hanchor,
             Heuristic** heurs,
-            int hcount);
+            int hcount,
+            SchedulingPolicy* policy=nullptr);
 
     virtual ~MRMHAPlanner();
 
@@ -32,6 +34,7 @@ public:
     void expand(MHASearchState* state, int hidx);
 
 private:
+    SchedulingPolicy* m_schedule_policy;
 };
 
 #endif
