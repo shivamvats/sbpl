@@ -4,7 +4,7 @@
 #include <sbpl/heuristics/heuristic.h>
 #include <sbpl/planners/mhaplanner.h>
 #include <sbpl/utils/heap.h>
-#include "types.h"
+#include "scheduling_policy.h"
 
 class MRMHAPlanner : public MHAPlanner
 {
