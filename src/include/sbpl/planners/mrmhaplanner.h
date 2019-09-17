@@ -1,6 +1,8 @@
 #ifndef sbpl_MRMHAPlanner_h
 #define sbpl_MRMHAPlanner_h
 
+#include <random>
+
 #include <sbpl/heuristics/heuristic.h>
 #include <sbpl/planners/mhaplanner.h>
 #include <sbpl/utils/heap.h>
@@ -34,7 +36,10 @@ public:
     void expand(MHASearchState* state, int hidx);
 
 private:
+    int sampleIndex(const std::vector<double>&);
+
     SchedulingPolicy* m_schedule_policy;
+    std::default_random_engine m_generator;
 };
 
 #endif

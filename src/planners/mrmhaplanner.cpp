@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <algorithm>
+#include <chrono>
 
 #include <sbpl/utils/key.h>
 
@@ -20,7 +21,11 @@ MRMHAPlanner::MRMHAPlanner(
     SchedulingPolicy* policy)
 :
     MHAPlanner( environment, hanchor, heurs, hcount ),
-    m_schedule_policy{policy} {}
+    m_schedule_policy{policy} {
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+        std::default_random_engine m_generator(seed);
+    }
 
 MRMHAPlanner::~MRMHAPlanner()
 {
@@ -40,6 +45,24 @@ int MRMHAPlanner::replan(
     ReplanParams params = m_params;
     params.max_time = allocated_time_sec;
     return replan(solution_stateIDs_V, params, solcost);
+}
+
+int argmax(std::vector<double>& vec){
+    int max_id = 0;
+    for(int i=0; i<vec.size(); i++)
+        if(vec[i] > vec[max_id])
+            max_id = i;
+    return max_id;
+}
+
+// Sample an index from a discrete distribution.
+int MRMHAPlanner::sampleIndex(const std::vector<double>& probs){
+    std::vector<int> counts;
+    // Ignore the anchor
+    for(int i=1; i<probs.size(); i++)
+        counts.push_back(100*probs[i]);
+    std::discrete_distribution<int> dist(counts.begin(), counts.end());
+    return dist(m_generator);
 }
 
 int MRMHAPlanner::replan(
@@ -113,18 +136,53 @@ int MRMHAPlanner::replan(
             }
         }
 
-        //for (int hidx = 1; hidx < num_heuristics(); ++hidx) {
-        int hidx = m_schedule_policy->getNextQueue();
         if (m_open[0].emptyheap()) {
             break;
         }
+        //for (int hidx = 1; hidx < num_heuristics(); ++hidx) {
+        // Ensure that none of the queues are empty.
+        std::vector<double> queue_probs;
+        queue_probs.resize(num_heuristics());
+        // Anchor contains all the actions.
+        queue_probs[0] = 1.0;
+
+        SBPL_ERROR("Helo");
+        for(int hidx=1; hidx<num_heuristics(); ++hidx){
+            //Only check if queue is empty or not.
+            SBPL_ERROR("hidx: %d", hidx);
+            if (!m_open[hidx].emptyheap()){
+                double p = m_schedule_policy->getActionSpaceProb(
+                        state_from_open_state(m_open[hidx].getminheap())->state_id,
+                            hidx );
+                queue_probs[hidx] = p;
+            } else {
+                if (m_goal_state->g <= get_minf(m_open[0])) {
+                    m_eps_satisfied = m_eps * m_eps_mha;
+                    extract_path(solution_stateIDs_V, solcost);
+                    return 1;
+                }
+                else {
+                    MHASearchState* s =
+                            state_from_open_state(m_open[0].getminheap());
+                    expand(s, 0);
+                }
+                // All queues have been modified.
+                // Need to 
+                hidx = 1;
+            }
+        }
+
+        // Pick a queue for expansion.
+        //hidx = m_schedule_policy->getNextQueue(top_states);
+        //int hidx = argmax(queue_probs) + 1;
+        int hidx = sampleIndex(queue_probs) + 1;
+        SBPL_ERROR("hidx: %d", hidx);
 
         if (!m_open[hidx].emptyheap() && get_minf(m_open[hidx]) <=
-            m_eps_mha * get_minf(m_open[0]))
-        {
+            m_eps_mha * get_minf(m_open[0])){
             auto state = state_from_open_state(m_open[hidx].getminheap());
-            if(hidx == 1 && state->od[hidx].h > 1000*25)
-                continue;
+            //if(hidx == 1 && state->od[hidx].h > 1000*25)
+            //    continue;
             //if(hidx == 2 && state->od[hidx].h < 1000*10)
                 //continue;
             if (m_goal_state->g <= get_minf(m_open[hidx])) {
