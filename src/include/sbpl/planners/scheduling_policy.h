@@ -8,6 +8,9 @@ class SchedulingPolicy {
     SchedulingPolicy(int _num_queues) : m_num_queues{_num_queues} {};
     //virtual int getNextQueue(const std::vector<double>& state) = 0;
     virtual double getActionSpaceProb(int state_id, int hidx) = 0;
+    virtual int getAction(std::vector<int> state_ids){
+        throw "Not Implemented";
+    }
     int numQueues() const {return m_num_queues;}
 
     private:
