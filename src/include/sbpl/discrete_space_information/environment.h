@@ -196,6 +196,12 @@ public:
      */
     virtual void SetAllPreds(CMDPSTATE* state) = 0;
 
+    virtual void setRepID(int stateID, int repID)
+    {
+        SBPL_ERROR("setRepID not implemented");
+        throw SBPL_Exception("ERROR: setRepID is not implemented for this environment");
+    }
+
     /**
      * \brief returns the number of states (hashentries) created
      */
